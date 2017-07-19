@@ -53,16 +53,21 @@ app.get('/api/books/:id', function (req, res) {
 });
 
 app.post('/api/books/:bookId/characters', function(req,res) {
-  var newCharacter = new db.character({name:req.body.name});
+
   db.Book.findById(req.params.bookId)
   .populate('author')
   .exec(function(err,foundBook){
     console.log(foundBook);
     if (err) {
       res.status(500).json({error:err.message});
-    } else if (foundBook === null) {}
+    } else if (foundBook === null) {
+      res.status(404).json({error: "No Book found by this ID"});
+    } else {
+      foundBook.characters.push(req.body);
+      foundBook.save();
+      res.status(201).json(foundBook);
+    }
   })
-
 
 })
 

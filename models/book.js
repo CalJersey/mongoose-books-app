@@ -1,6 +1,10 @@
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
+var CharacterSchema = new Schema({
+    name: String
+  });
+
 var BookSchema = new Schema({
   title: String,
   author: {
@@ -15,8 +19,6 @@ var BookSchema = new Schema({
 
 var Book = mongoose.model('Book', BookSchema);
 
-module.exports = Book;
+var Character = mongoose.model('Character', CharacterSchema);
 
-var CharacterSchema = new Schema({
-  name: String
-});
+module.exports = Book;
