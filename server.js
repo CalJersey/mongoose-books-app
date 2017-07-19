@@ -52,7 +52,19 @@ app.get('/api/books/:id', function (req, res) {
 
 });
 
+app.post('/api/books/:bookId/characters', function(req,res) {
+  var newCharacter = new db.character({name:req.body.name});
+  db.Book.findById(req.params.bookId)
+  .populate('author')
+  .exec(function(err,foundBook){
+    console.log(foundBook);
+    if (err) {
+      res.status(500).json({error:err.message});
+    } else if (foundBook === null) {}
+  })
 
+
+})
 
 app.post('/api/books', function (req, res) {
   // create new book with form data (`req.body`)
